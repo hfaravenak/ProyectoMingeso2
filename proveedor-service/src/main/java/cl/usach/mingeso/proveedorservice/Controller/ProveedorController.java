@@ -16,11 +16,17 @@ public class ProveedorController {
     ProveedorService proveedorService;
 
     @GetMapping("/listar-proveedores")
-    public List<ProveedorEntity> obtenerProveedores(){ return proveedorService.obtenerProveedores(); }
+    public ResponseEntity<List<ProveedorEntity>> obtenerProveedores(){
+        List<ProveedorEntity> proveedores = proveedorService.obtenerProveedores();
+        if(proveedores.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(proveedores);
+    }
 
     @PostMapping("/crear-proveedor")
-    public void crearProveedor(@RequestBody ProveedorEntity proveedor) {
-        proveedorService.guardarProveedor(proveedor.getCodigo(), proveedor.getNombre(), proveedor.getCategoria(), proveedor.getRetencion());
+    public ResponseEntity<ProveedorEntity> crearProveedor(@RequestBody ProveedorEntity proveedorEntity){
+        ProveedorEntity nuevoProveedor = proveedorService.guardarProveedor(proveedorEntity);
+        return ResponseEntity.ok(nuevoProveedor);
     }
 
     @DeleteMapping("/eliminar-proveedor/{codigo}")

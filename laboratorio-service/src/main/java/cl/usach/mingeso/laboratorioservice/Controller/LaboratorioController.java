@@ -3,6 +3,7 @@ package cl.usach.mingeso.laboratorioservice.Controller;
 import cl.usach.mingeso.laboratorioservice.Entity.LaboratorioEntity;
 import cl.usach.mingeso.laboratorioservice.Service.LaboratorioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,21 +17,34 @@ public class LaboratorioController {
     @Autowired
     LaboratorioService laboratorioService;
 
-    @GetMapping("/fileUpload")
-    public String main() { return "lab-file-upload"; }
-
-    @PostMapping("/fileUpload")
-    public String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-        laboratorioService.guardarArchivo(file);
-        redirectAttributes.addFlashAttribute("mensaje", "¡Archivo cargado correctamente!");
-        laboratorioService.leerCsv("Laboratorio.csv");
-        return "redirect:/laboratorio/fileUpload";
+    @PostMapping("/subir-lab")
+    public String saveLab(@RequestParam("file") MultipartFile file){
+        try{
+            laboratorioService.guardarArchivo(file);
+            laboratorioService.leerCsv(file.getOriginalFilename());
+            return "Archivo importado correctamente";
+        }catch (Exception e){
+            return "Error" + e.getMessage();
+        }
     }
 
-    @GetMapping("/fileInformation")
-    public String listar(Model model) {
-        List<LaboratorioEntity> datas = laboratorioService.obtenerDataLab();
-        model.addAttribute("datas", datas);
-        return "lab-file-information";
+    @GetMapping("/listar-labs")
+    public ResponseEntity<List<LaboratorioEntity>> obtenerLaboratorios(){
+        List<LaboratorioEntity> proveedores = laboratorioService.obtenerDataLab();
+        if(proveedores.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(proveedores);
     }
+
+    @GetMapping("/{codigoProveedor}")
+    public ResponseEntity<List<LaboratorioEntity>> getByProveedorId(@PathVariable("codigoProveedor") String proveedorId){
+        List<LaboratorioEntity> acopio = laboratorioService.getPorIdProveedor(proveedorId);
+        return ResponseEntity.ok(acopio);
+    }
+
+
+
+
+
+
 }

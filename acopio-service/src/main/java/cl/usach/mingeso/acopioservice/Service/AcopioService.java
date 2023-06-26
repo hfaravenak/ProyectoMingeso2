@@ -24,6 +24,11 @@ public class AcopioService {
 
     private final Logger logg = LoggerFactory.getLogger(AcopioService.class);
     public List<AcopioEntity> obtenerAcopios() { return acopioRepository.findAll(); }
+
+    public List<AcopioEntity> getPorIdProveedor(String proveedorId){
+        return acopioRepository.findByProveedor(proveedorId);
+    }
+
     public AcopioEntity guardarDatosAcopios(AcopioEntity acopio) { return acopioRepository.save(acopio); }
 
     public void eliminarAcopio(String proveedor) {
@@ -96,4 +101,5 @@ public class AcopioService {
         newData.setKls_leche(kls_leche);
         guardarDatosAcopios(newData);
     }
+
 }

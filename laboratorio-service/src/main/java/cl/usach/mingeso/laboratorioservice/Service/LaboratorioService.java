@@ -26,6 +26,10 @@ public class LaboratorioService {
 
     public List<LaboratorioEntity> obtenerDataLab() { return laboratorioRepository.findAll(); }
 
+    public List<LaboratorioEntity> getPorIdProveedor(String proveedorId){
+        return laboratorioRepository.findByProveedor(proveedorId);
+    }
+
     public LaboratorioEntity guardarDataLab(LaboratorioEntity laboratorio) { return laboratorioRepository.save(laboratorio); }
 
     public void eliminarLaboratorio(String proveedor) {

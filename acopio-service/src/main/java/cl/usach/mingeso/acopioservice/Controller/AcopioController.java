@@ -3,6 +3,7 @@ package cl.usach.mingeso.acopioservice.Controller;
 import cl.usach.mingeso.acopioservice.Entity.AcopioEntity;
 import cl.usach.mingeso.acopioservice.Service.AcopioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,24 +17,29 @@ public class AcopioController {
     @Autowired
     AcopioService acopioService;
 
-    @GetMapping("/fileUpload")
-    public String main() {
-        return "acopioFileUpload";
+    @PostMapping("/subir-acopio")
+    public String save (@RequestParam("file") MultipartFile file){
+        try{
+            acopioService.guardarArchivo(file);
+            acopioService.leerCsv(file.getOriginalFilename());
+            return "Archivo importado correctamente";
+        }catch (Exception e){
+            return "Error" + e.getMessage();
+        }
     }
 
-    @PostMapping("/fileUpload")
-    public String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-        acopioService.guardarArchivo(file);
-        redirectAttributes.addFlashAttribute("mensaje", "¡Archivo de Acopio cargado correctamente!");
-        acopioService.leerCsv("Acopio.csv");
-        return "redirect:/acopio/fileUpload";
+    @GetMapping("/listar-acopios")
+    public ResponseEntity<List<AcopioEntity>> obtenerProveedores(){
+        List<AcopioEntity> proveedores = acopioService.obtenerAcopios();
+        if(proveedores.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(proveedores);
     }
 
-    @GetMapping("/fileInformation")
-    public String listar(Model model) {
-        List<AcopioEntity> datas = acopioService.obtenerAcopios();
-        model.addAttribute("datas", datas);
-        return "acopioFileInformation";
+    @GetMapping("/{codigoProveedor}")
+    public ResponseEntity<List<AcopioEntity>> getByProveedorId(@PathVariable("codigoProveedor") String proveedorId){
+        List<AcopioEntity> acopio = acopioService.getPorIdProveedor(proveedorId);
+        return ResponseEntity.ok(acopio);
     }
 
 

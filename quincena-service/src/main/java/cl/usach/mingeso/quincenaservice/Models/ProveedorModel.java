@@ -1,16 +1,13 @@
-package cl.usach.mingeso.proveedorservice.Entity;
+package cl.usach.mingeso.quincenaservice.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "proveedor")
-public class ProveedorEntity {
-    @Id
-    @Column(name = "codigo", nullable = false)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProveedorModel {
     private String codigo;
     private String nombre;
     private String categoria;
