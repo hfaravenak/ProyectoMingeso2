@@ -10,3 +10,4 @@ spring:
           search-paths: config-data
   application:
     name: config-service
+
