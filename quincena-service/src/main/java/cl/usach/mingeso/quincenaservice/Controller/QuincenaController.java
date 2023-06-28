@@ -27,6 +27,12 @@ public class QuincenaController {
         return ResponseEntity.ok(quincenas);
     }
 
+    @GetMapping("/{codigoProveedor}")
+    public ResponseEntity<List<QuincenaEntity>> getByProveedorId(@PathVariable("codigoProveedor") String proveedorId){
+        List<QuincenaEntity> acopio = quincenaService.getPorIdProveedor(proveedorId);
+        return ResponseEntity.ok(acopio);
+    }
+
     @GetMapping("/crear-quincena/{proveedorId}")
     public ResponseEntity<QuincenaEntity> crearNuevaQuincena(@PathVariable("proveedorId") String porveedorId){
         QuincenaEntity nuevaQuincena = quincenaService.crearQuincena(porveedorId);
@@ -34,7 +40,7 @@ public class QuincenaController {
     }
 
     //TESTINGS DE METODOS
-    @GetMapping("/{proveedorId}")
+    @GetMapping("/obtener-acopio/{proveedorId}")
     public List<AcopioModel> obtenerAcopioPorProveedor(@PathVariable String proveedorId) {
         return quincenaService.consultaAcopio(proveedorId);
     }

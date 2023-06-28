@@ -27,6 +27,10 @@ public class QuincenaService {
 
     public List<QuincenaEntity> obtenerQuincenas(){ return quincenaRepository.findAll(); }
 
+    public List<QuincenaEntity> getPorIdProveedor(String proveedorId){
+        return quincenaRepository.findByCodigoProveedor(proveedorId);
+    }
+
     public QuincenaEntity guardarQuincena(QuincenaEntity quincenaEntity) {
         QuincenaEntity nuevaQuincena = quincenaRepository.save(quincenaEntity);
         return nuevaQuincena;
