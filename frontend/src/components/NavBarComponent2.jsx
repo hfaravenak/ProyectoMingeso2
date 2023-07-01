@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-
-//NO OLVIDES CAMBIAR LA SEGUNDA REFERENCIA AL ACOPIO FILE INFORMATION CUANDO TENGAS EL COMPONENTE LISTO!!!!!!!!!!
-function NavbarComponent(){
+function NavbarComponent2(){
     return(
         <>
         <NavStyle>
@@ -14,14 +12,14 @@ function NavbarComponent(){
                 <nav>
                 </nav>
                 <a class="btn" href="/"><button>Volver al menú principal</button></a>
-                <a class="btn-2" href="/informacion-archivo-acopio"><button>Ver el último archivo de acopio cargado</button></a>
+                <a class="btn-2" href="/subir-archivo-acopio"><button>Cargar un nuevo .CSV de acopio</button></a>
             </header>
             </NavStyle>
         </>
     )
 }
 
-export default NavbarComponent;
+export default NavbarComponent2;
 
 
 const NavStyle = styled.nav`
