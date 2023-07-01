@@ -1,5 +1,5 @@
 import React, { useState  } from "react";
-import NavbarComponent3 from "./NavBarComponent3";
+import NavbarComponent6 from "./NavBarComponent6";
 import styled from "styled-components";
 import AgregarProveedorService from "../services/AgregarProveedorService";
 import Form from 'react-bootstrap/Form';
@@ -38,14 +38,14 @@ export default function AgregarProveedorComponent(props){
     const agregarProveedor = e => {
         e.preventDefault();
         swal({
-            title: "¿Está seguro de que desea enviar la autorización?",
-            text: "Una vez enviada, no podrá ser modificada. El empleado quedará AUTORIZADO para trabajar horas extras en la FECHA indicada.",
+            title: "¿Está seguro de que desea agregar a este proveedor?",
+            text: "",
             icon: "warning",
             buttons: ["Cancelar", "Agregar"],
             dangerMode: true
         }).then(respuesta=>{
             if(respuesta){
-                swal("Autorización enviada correctamente!", {icon: "success", timer: "3000"});
+                swal("Proveedor agregado correctamente!", {icon: "success", timer: "3000"});
                 let proveedor = { codigo: input.codigo, nombre: input.nombre, categoria: input.categoria, retencion: input.retencion };
                 console.log(input.codigo)
                 console.log(input.nombre)
@@ -58,7 +58,7 @@ export default function AgregarProveedorComponent(props){
                   );
                 }
             else{
-                swal({text: "Autorización no enviada.", icon: "error"});
+                swal({text: "Proveedor no agregado.", icon: "error"});
             }
         });
     };
@@ -67,7 +67,7 @@ export default function AgregarProveedorComponent(props){
             
             <Styles>
             <div className="home">
-                <NavbarComponent3 />
+                <NavbarComponent6 />
                     <div className="mainclass">
                         <div className="form1">
                             <h1 className="text-center"><b>Agregar Nuevo Proveedor</b></h1>
