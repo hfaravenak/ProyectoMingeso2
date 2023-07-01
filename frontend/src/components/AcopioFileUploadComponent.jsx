@@ -23,7 +23,7 @@ class AcopioFileUploadComponent extends Component{
   
   onFileUpload = () => {
     swal({
-      title: "¿Está seguro de que desea cargar el archivo de texto?",
+      title: "¿Está seguro de que desea cargar este archivo?",
       text: "Tenga en cuenta que solo pueden ser cargados archivos '.csv' y su formato debe ser correcto.",
       icon: "warning",
       buttons: ["Cancelar", "Cargar"],

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function NavbarComponent3(){
+function NavbarComponent5(){
     return(
         <>
         <NavStyle>
@@ -12,14 +12,14 @@ function NavbarComponent3(){
                 <nav>
                 </nav>
                 <a class="btn" href="/"><button>Volver al menú principal</button></a>
-                <a class="btn" href="/agregar-proveedor"><button>Agregar nuevo Proveedor</button></a>
+                <a class="btn-2" href="/subir-archivo-lab"><button>Cargar un nuevo .CSV de LABORATORIO</button></a>
             </header>
             </NavStyle>
         </>
     )
 }
 
-export default NavbarComponent3;
+export default NavbarComponent5;
 
 
 const NavStyle = styled.nav`
@@ -52,4 +52,20 @@ const NavStyle = styled.nav`
     color: #ffbc0e;
     transform: scale(1.1);
   }
+.header .btn-2 button {
+    margin-left: 20px;
+    font-weight: 700;
+    color: #1b3039;
+    padding: 9px 25px;
+    background: #eceff1;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+  }
+.header .btn-2 button:hover{
+    background-color: #e2f1f8;
+    color: #ffbc0e;
+    transform: scale(1.1);
+}
 `
