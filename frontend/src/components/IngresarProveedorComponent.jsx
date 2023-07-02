@@ -1,4 +1,4 @@
-import React, { useState  } from "react";
+import React, { useState } from "react";
 import NavbarComponent7 from "./NavBarComponent7";
 import styled from "styled-components";
 import IngresarProveedorService from "../services/IngresarProveedorService";
@@ -6,72 +6,75 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import swal from 'sweetalert';
 
-export default function IngresarProveedorComponent(props){
+export default function IngresarProveedorComponent(props) {
 
     const initialState = {
         codigo: ""
     };
 
     const [input, setInput] = useState(initialState);
-    
+
     const changeCodigoHandler = event => {
         setInput({ ...input, codigo: event.target.value });
         console.log(input.codigo);
     };
-    
-    const ingresarProveedor = e => {
-        e.preventDefault();
-        swal({
-            title: "TESTING",
-            text: "",
-            icon: "warning",
-            buttons: ["Cancelar", "Agregar"],
-            dangerMode: true
-        }).then(respuesta=>{
-            if(respuesta){
-                swal("MORE TESTINGS", {icon: "success", timer: "3000"});
-                let proveedor = { codigo: input.codigo };
-                console.log(input.codigo)
-                console.log("proveedor => " + JSON.stringify(proveedor));
-                IngresarProveedorService.ingresarProveedor(proveedor).then(
-                    (res) => {
-                    }
-                  );
-                }
-            else{
-                swal({text: "Proveedor no agregado.", icon: "error"});
+
+    const ingresarProveedor = async (event) => {
+        event.preventDefault();
+
+        try {
+            const respuesta = await swal({
+                title: "¿Está seguro de que desea generar la planilla de pago de este proveedor?",
+                text: "",
+                icon: "warning",
+                buttons: ["Cancelar", "Enviar"],
+                dangerMode: true
+            });
+
+            if (respuesta) {
+                const res = await IngresarProveedorService.CrearPlanilla(input.codigo);
+
+                swal("Planilla de pago efectuada correctamente!", { icon: "success", timer: "3000" });
+                console.log("Respuesta exitosa:", res);
+
+                window.location.href = '/planilla';
+            } else {
+                swal({ text: "Planilla no generada.", icon: "error" });
             }
-        });
+
+        } catch (error) {
+            swal("Error al generar la planilla de pago.", { icon: "error" });
+            console.error("Error:", error);
+        }
     };
 
-    return(
-            
-            <Styles>
+    return (
+
+        <Styles>
             <div className="home">
                 <NavbarComponent7 />
-                    <div className="mainclass">
-                        <div className="form1">
-                            <h1 className="text-center"><b>Ingrese codigo del proveedor para obtener su planilla de pagos</b></h1>
-                            <div className="formcontainer">
-                                <hr></hr>
-                                <div className="container">
-                                    <Form>
-                                        <Form.Group className="mb-3" controlId="codigo" value = {input.codigo} onChange={changeCodigoHandler}>
-                                            <Form.Label>Codigo del proveedor</Form.Label>
-                                            <Form.Control type="codigo" placeholder="Ingrese el código de proveedor" />
-                                        </Form.Group>
-
-                                    </Form>
-                                </div>
-                                <Button className="boton" onClick={ingresarProveedor}>Obtener Planilla de Pagos</Button>
+                <div className="mainclass">
+                    <div className="form1">
+                        <h1 className="text-center"><b>Ingrese codigo del proveedor para obtener su planilla de pagos</b></h1>
+                        <div className="formcontainer">
+                            <hr></hr>
+                            <div className="container">
+                                <Form onSubmit={ingresarProveedor}>
+                                    <Form.Group className="mb-3" controlId="codigo">
+                                        <Form.Label>Codigo del proveedor</Form.Label>
+                                        <Form.Control type="codigo" placeholder="Ingrese el código de proveedor" name="proveedorId" value={input.codigo} onChange={changeCodigoHandler} />
+                                    </Form.Group>
+                                    <Button className="boton" type="submit" >Obtener Planilla de Pagos</Button>
+                                </Form>
                             </div>
                         </div>
                     </div>
-                
+                </div>
+
             </div>
-            </Styles>
-        )
-    }
+        </Styles>
+    )
+}
 
 
 const Styles = styled.div`

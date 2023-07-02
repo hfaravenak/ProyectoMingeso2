@@ -9,10 +9,7 @@ import cl.usach.mingeso.planillaservice.Repository.PlanillaRepository;
 import cl.usach.mingeso.planillaservice.Service.PlanillaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +19,8 @@ public class PlanillaController {
     @Autowired
     PlanillaService planillaService;
 
-    @GetMapping("/crear-planilla/{proveedorId}")
-    public ResponseEntity<PlanillaEntity> crearNuevaQuincena(@PathVariable("proveedorId") String porveedorId){
+    @PostMapping
+    public ResponseEntity<PlanillaEntity> crearNuevaQuincena(@RequestParam("proveedorId") String porveedorId){
         PlanillaEntity nuevaPlanilla = planillaService.crearPlanilla(porveedorId);
         return ResponseEntity.ok(nuevaPlanilla);
     }
