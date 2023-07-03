@@ -10,9 +10,9 @@ spring:
       uri: http://localhost:8081
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/planilla?autorReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://${DB_HOST}/${DB_NAME}?autorReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     show-sql: true
     hibernate:
