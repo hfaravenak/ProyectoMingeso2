@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proveedor-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proveedor-db
+  template:
+    metadata:
+      labels:
+        app: proveedor-db
+    spec:
+      containers:
+        - name: proveedor-db
+          image: postgres:latest
+          env:
+            - name: POSTGRES_DB
+              value: proveedor_db
+            - name: POSTGRES_USER
+              value: username
+            - name: POSTGRES_PASSWORD
+              value: password
+
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: proveedor-db-storage
+      volumes:
+        - name: proveedor-db-storage
+          persistentVolumeClaim:
+            claimName: proveedor-db-pvc
