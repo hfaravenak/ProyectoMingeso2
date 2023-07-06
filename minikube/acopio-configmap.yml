@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: acopio
+data:
+  host: mysql
+  name: acopio_db

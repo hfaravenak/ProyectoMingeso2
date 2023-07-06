@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: planilla
+data:
+  host: mysql
+  name: planilla_db
