@@ -1,3 +1,9 @@
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-service:8761/eureka/
 spring:
   devtools:
     restart:
@@ -9,12 +15,12 @@ spring:
       enabled: true
       uri: http://localhost:8081
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/acopio?autorReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
-    username: postgres
-    password: postgres
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST}/${DB_NAME}?autorReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     show-sql: true
     hibernate:
-      dialect: org.hibernate.dialect.PostgreSQLDialect
+      dialect: MySQL8Dialect
       ddl-auto: create
